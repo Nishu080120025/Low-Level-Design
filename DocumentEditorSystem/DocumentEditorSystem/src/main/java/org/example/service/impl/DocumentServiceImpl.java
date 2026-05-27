@@ -66,10 +66,18 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public ShareDocument shareDocument(String documentId, User user, UserRole role) {
+    public ShareDocument shareDocument(String documentId, User user, UserRole role, String requestorUserId) {
         Document document = documentRepository.getDocument(documentId);
         if (document == null) {
             System.out.println("Document not found with id: " + documentId);
+            return null;
+        }
+        if(!document.getCollaborators().containsKey(requestorUserId)){
+            System.out.println("Requestor does not have his name collaborator in the document");
+            return null;
+        }
+        if(!document.getCollaborators().get(requestorUserId).equals(UserRole.OWNER)){
+            System.out.println("Requestor does not have permission to share the document");
             return null;
         }
         ShareDocument shareDocument = new ShareDocument(user.getUserId(), documentId, role);
@@ -103,10 +111,18 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void insertTextInDocument(String documentId, String text, int startPosition) {
+    public void insertTextInDocument(String documentId, String text, int startPosition,User user) {
         Document document = documentRepository.getDocument(documentId);
         if (document == null) {
             System.out.println("Document not found with id: " + documentId);
+            return;
+        }
+        if(!document.getCollaborators().containsKey(user.getUserId())){
+            System.out.println("User does not have his name collaborator in the document");
+            return;
+        }
+        if(!permissionManager.hasPermission(document.getCollaborators().get(user.getUserId()),Action.WRITE)){
+            System.out.println("User does not have permission to edit the document");
             return;
         }
         EditCommand command = new InsertCommand(document, startPosition, text);
@@ -117,11 +133,19 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void deleteTextInDocument(String documentId, int startPosition, int endPosition) {
+    public void deleteTextInDocument(String documentId,int startPosition, int endPosition, User user) {
 
         Document document = documentRepository.getDocument(documentId);
         if (document == null) {
             System.out.println("Document not found with id: " + documentId);
+            return;
+        }
+        if(!document.getCollaborators().containsKey(user.getUserId())){
+            System.out.println("User does not have his name collaborator in the document");
+            return;
+        }
+        if(!permissionManager.hasPermission(document.getCollaborators().get(user.getUserId()),Action.WRITE)){
+            System.out.println("User does not have permission to edit the document");
             return;
         }
         EditCommand command = new DeleteCommand(document, startPosition, endPosition);
@@ -141,6 +165,7 @@ public class DocumentServiceImpl implements DocumentService {
         String res=commandService.undoCommand();
         if(res==null){
             System.out.println("No edit to undo in document with id " + documentId);
+            return;
         }
         versionService.saveVersion(documentId, document.getContent());
         System.out.println("Last edit undone successfully in document with id " + documentId);

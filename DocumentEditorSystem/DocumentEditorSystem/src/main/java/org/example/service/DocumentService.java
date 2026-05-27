@@ -12,13 +12,13 @@ public interface DocumentService {
     Document getDocument(String documentId);
     Document updateDocument(String documentId,Document document);
     void deleteDocument(String documentId);
-    ShareDocument shareDocument(String documentId,User user,UserRole role);
+    ShareDocument shareDocument(String documentId,User user,UserRole role,String requestorUserId);
     List<Document> getAllDocumentsOfOwnerByUserId(String userId);
 
     String generateDocumentId();
     User addCollaborators(String documentId,String userId,UserRole userRole);
-    void insertTextInDocument(String documentId,String text,int position);
-    void deleteTextInDocument(String documentId,int startPosition,int endPosition);
+    void insertTextInDocument(String documentId,String text,int position,User user);
+    void deleteTextInDocument(String documentId,int startPosition,int endPosition,User user);
     void undoLastEdit(String documentId);
     void redoLastEdit(String documentId);
 

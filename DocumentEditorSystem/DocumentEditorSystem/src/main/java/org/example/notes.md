@@ -110,7 +110,7 @@ createDocument(User owner, String title);
 ```java
 shareDocument(String documentId,
               User user,
-              Role role);
+              Role role,String requestorUserId);
 ```
 
 ### Rules

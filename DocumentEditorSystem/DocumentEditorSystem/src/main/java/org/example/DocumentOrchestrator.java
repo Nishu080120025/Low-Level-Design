@@ -23,8 +23,8 @@ public class DocumentOrchestrator {
         System.out.println("Document is : " + documentCreated);
     }
 
-    public void shareDocument(String documentId, User user, UserRole role) {
-        ShareDocument sharedDocument = documentService.shareDocument(documentId, user, role);
+    public void shareDocument(String documentId, User user, UserRole role,String requestorUserId) {
+        ShareDocument sharedDocument = documentService.shareDocument(documentId, user, role,requestorUserId);
         if (sharedDocument != null) {
             System.out.println("Shared Document details: " + sharedDocument);
         }
@@ -49,22 +49,22 @@ public class DocumentOrchestrator {
         System.out.println("Updated Document details: " + updatedDocument);
     }
 
-    public void insertText(String documentId, int startPosition, String text) {
+    public void insertText(String documentId, int startPosition, String text, User user) {
         Document document = documentService.getDocument(documentId);
         if (document == null) {
             System.out.println("Document not found with id: " + documentId);
             return;
         }
-        documentService.insertTextInDocument(documentId, text,startPosition);
+        documentService.insertTextInDocument(documentId, text,startPosition,user);
     }
 
-    public void deleteText(String documentId, int startPosition, int endPosition) {
+    public void deleteText(String documentId, int startPosition, int endPosition,User user) {
         Document document = documentService.getDocument(documentId);
         if (document == null) {
             System.out.println("Document not found with id: " + documentId);
             return;
         }
-        documentService.deleteTextInDocument(documentId, startPosition, endPosition);
+        documentService.deleteTextInDocument(documentId, startPosition, endPosition,user);
     }
 
     public void undoLastEdit(String documentId){
