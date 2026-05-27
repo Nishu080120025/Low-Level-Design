@@ -16,5 +16,10 @@ public interface DocumentService {
     List<Document> getAllDocumentsOfOwnerByUserId(String userId);
 
     String generateDocumentId();
-    User addCollaborators(String documentId,String userId);
+    User addCollaborators(String documentId,String userId,UserRole userRole);
+    void insertTextInDocument(String documentId,String text,int position);
+    void deleteTextInDocument(String documentId,int startPosition,int endPosition);
+    void undoLastEdit(String documentId);
+    void redoLastEdit(String documentId);
+
 }

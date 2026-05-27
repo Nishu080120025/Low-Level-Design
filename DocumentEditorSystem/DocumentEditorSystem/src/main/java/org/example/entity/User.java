@@ -5,12 +5,11 @@ import java.util.Objects;
 public class User {
     private String userId;
     private String name;
-    private UserRole role;
 
     public User(String userId, String name, UserRole role) {
         this.userId = userId;
         this.name = name;
-        this.role = role;
+
     }
 
     public String getUserId() {
@@ -29,12 +28,6 @@ public class User {
         this.name = name;
     }
 
-    public UserRole getRole() {
-        return role;
-    }
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
 
     @Override
     public boolean equals(Object o) {

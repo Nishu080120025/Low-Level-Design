@@ -1,30 +1,20 @@
 package org.example;
 
-import org.example.command.DeleteCommand;
-import org.example.command.EditCommand;
-import org.example.command.InsertCommand;
 import org.example.entity.Document;
 import org.example.entity.ShareDocument;
 import org.example.entity.User;
 import org.example.entity.UserRole;
-import org.example.service.CommandService;
 import org.example.service.DocumentService;
-import org.example.service.UserService;
-import org.example.service.VersionService;
+
 
 import java.util.HashMap;
 
 public class DocumentOrchestrator {
-    private final UserService userService;
-    private final DocumentService documentService;
-    private final VersionService versionService;
-    private final CommandService commandService;
 
-    public DocumentOrchestrator(UserService userService, DocumentService documentService, VersionService versionService, CommandService commandService) {
-        this.userService = userService;
+    private final DocumentService documentService;
+
+    public DocumentOrchestrator( DocumentService documentService) {
         this.documentService = documentService;
-        this.versionService = versionService;
-        this.commandService = commandService;
     }
 
     public void createDocument(User owner, String title) {
@@ -36,7 +26,6 @@ public class DocumentOrchestrator {
     public void shareDocument(String documentId, User user, UserRole role) {
         ShareDocument sharedDocument = documentService.shareDocument(documentId, user, role);
         if (sharedDocument != null) {
-            System.out.println("Document with id: " + documentId + " shared with user: " + user.getName() + " with role: " + role);
             System.out.println("Shared Document details: " + sharedDocument);
         }
         return;
@@ -66,12 +55,7 @@ public class DocumentOrchestrator {
             System.out.println("Document not found with id: " + documentId);
             return;
         }
-        EditCommand command = new InsertCommand(document, startPosition, text);
-        commandService.executeCommand(command);
-        versionService.saveVersion(documentId, document.getContent());
-        documentService.updateDocument(documentId, document);
-        System.out.println("Text inserted successfully at position: " + startPosition + " in document with id: " + documentId);
-        System.out.println("Updated Document details: " + document);
+        documentService.insertTextInDocument(documentId, text,startPosition);
     }
 
     public void deleteText(String documentId, int startPosition, int endPosition) {
@@ -80,12 +64,7 @@ public class DocumentOrchestrator {
             System.out.println("Document not found with id: " + documentId);
             return;
         }
-        EditCommand command = new DeleteCommand(document, startPosition, endPosition);
-        commandService.executeCommand(command);
-        versionService.saveVersion(documentId, document.getContent());
-        documentService.updateDocument(documentId, document);
-        System.out.println("Text deleted successfully from position: " + startPosition + " to position: " + endPosition + " in document with id: " + documentId);
-        System.out.println("Updated Document details: " + document);
+        documentService.deleteTextInDocument(documentId, startPosition, endPosition);
     }
 
     public void undoLastEdit(String documentId){
@@ -94,11 +73,7 @@ public class DocumentOrchestrator {
             System.out.println("Document not found with id: "+documentId);
             return;
         }
-        commandService.undoCommand();
-        versionService.saveVersion(documentId, document.getContent());
-        documentService.updateDocument(documentId, document);
-        System.out.println("Last edit undone successfully in document with id: "+documentId);
-        System.out.println("Updated Document details: "+document);
+        documentService.undoLastEdit(documentId);
     }
 
     public void redoLastEdit(String documentId){
@@ -107,11 +82,7 @@ public class DocumentOrchestrator {
             System.out.println("Document not found with id: "+documentId);
             return;
         }
-        commandService.redoCommand();
-        versionService.saveVersion(documentId, document.getContent());
-        documentService.updateDocument(documentId, document);
-        System.out.println("Last edit redone successfully in document with id: "+documentId);
-        System.out.println("Updated Document details: "+document);
+        documentService.redoLastEdit(documentId);
     }
 
 

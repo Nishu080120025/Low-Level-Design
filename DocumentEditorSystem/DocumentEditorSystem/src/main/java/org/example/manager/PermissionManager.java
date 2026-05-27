@@ -13,14 +13,14 @@ public class PermissionManager {
     public PermissionManager(HashMap<UserRole, List<Action>> permissions) {
         this.permissions = permissions;
         permissions.putIfAbsent(UserRole.OWNER, new ArrayList<>());
-        permissions.putIfAbsent(UserRole.ADMIN, new ArrayList<>());
+        permissions.putIfAbsent(UserRole.EDITOR, new ArrayList<>());
         permissions.putIfAbsent(UserRole.VIEWER, new ArrayList<>());
         permissions.get(UserRole.OWNER).add(Action.READ);
         permissions.get(UserRole.OWNER).add(Action.WRITE);
         permissions.get(UserRole.OWNER).add(Action.SHARE);
         permissions.get(UserRole.OWNER).add(Action.DELETE);
-        permissions.get(UserRole.ADMIN).add(Action.READ);
-        permissions.get(UserRole.ADMIN).add(Action.WRITE);
+        permissions.get(UserRole.EDITOR).add(Action.READ);
+        permissions.get(UserRole.EDITOR).add(Action.WRITE);
         permissions.get(UserRole.VIEWER).add(Action.READ);
     }
 

@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import org.example.command.EditCommand;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -10,10 +12,10 @@ public class Document {
     private String documentTitle;
     private HashMap<Integer,Version> versionHistory;
     private User owner;
-    private List<User> collaborators;
+    private HashMap<String , UserRole> collaborators;
 
 
-    public Document(String documentId, StringBuilder content, HashMap<Integer,Version>versionHistory, User owner,List<User>collaborators,String documentTitle) {
+    public Document(String documentId, StringBuilder content, HashMap<Integer,Version>versionHistory, User owner,HashMap<String ,UserRole >collaborators,String documentTitle,List<EditCommand>documentCommands) {
         this.documentId = documentId;
         this.content = content;
         this.versionHistory = versionHistory;
@@ -44,7 +46,7 @@ public class Document {
         return this.versionHistory;
     }
 
-    public List<User> getCollaborators() {
+    public HashMap<String,UserRole> getCollaborators() {
         return this.collaborators;
     }
 
@@ -55,6 +57,7 @@ public class Document {
     public void setDocumentTitle(String documentTitle) {
         this.documentTitle = documentTitle;
     }
+
 
 
     @Override
@@ -75,6 +78,8 @@ public class Document {
                 ", content='" + content + '\'' +
                 ", versionHistory=" + versionHistory +
                 ", owner=" + owner +
+                ", collaborators=" + collaborators +
+                ", documentTitle='" + documentTitle + '\'' +
                 '}';
     }
 }

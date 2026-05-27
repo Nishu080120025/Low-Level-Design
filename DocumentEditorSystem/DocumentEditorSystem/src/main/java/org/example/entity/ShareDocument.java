@@ -5,12 +5,12 @@ import java.util.Objects;
 public class ShareDocument {
     private String UserId;
     private String documentId;
-    private Document document;
+    private UserRole userRole;
 
-    public ShareDocument(String userId, String documentId, Document document) {
+    public ShareDocument(String userId, String documentId, UserRole userRole) {
         UserId = userId;
         this.documentId = documentId;
-        this.document = document;
+        this.userRole = userRole;
     }
     public String getUserId() {
         return UserId;
@@ -19,11 +19,8 @@ public class ShareDocument {
     public String getDocumentId() {
         return documentId;
     }
-    public Document getDocument() {
-        return document;
-    }
-    public void setDocument(Document document) {
-        this.document = document;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class ShareDocument {
         return "ShareDocument{" +
                 "UserId='" + UserId + '\'' +
                 ", documentId='" + documentId + '\'' +
-                ", document=" + document +
+                ", role= " +userRole+
                 '}';
     }
 

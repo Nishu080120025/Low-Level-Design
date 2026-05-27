@@ -5,6 +5,6 @@ import org.example.command.EditCommand;
 public interface CommandService {
 
     void executeCommand(EditCommand command);
-    void undoCommand();
-    void redoCommand();
+    String  undoCommand();
+    String  redoCommand();
 }

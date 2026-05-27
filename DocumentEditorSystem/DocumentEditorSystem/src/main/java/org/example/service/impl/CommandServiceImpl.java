@@ -10,7 +10,7 @@ public class CommandServiceImpl implements CommandService {
     private Stack<EditCommand>undoStack;
     private Stack<EditCommand>redoStack;
 
-    public CommandServiceImpl(List<EditCommand> commandList) {
+    public CommandServiceImpl() {
         this.undoStack=new Stack<>();
         this.redoStack=new Stack<>();
     }
@@ -25,25 +25,26 @@ public class CommandServiceImpl implements CommandService {
     }
 
     @Override
-    public void undoCommand(){
+    public String undoCommand(){
         if(undoStack.isEmpty()){
             System.out.println("No commands to undo.");
-            return;
+            return null;
         }
         EditCommand command=undoStack.pop();
         command.undo();
         redoStack.push(command);
-        System.out.println("command undone");
+        return "command undone";
     }
 
     @Override
-    public void redoCommand(){
+    public String redoCommand(){
         if(redoStack.isEmpty()){
             System.out.println("No commands to redo.");
-            return;
+            return null;
         }
         EditCommand command=redoStack.pop();
         command.execute();
         undoStack.push(command);
+        return "command redone";
     }
 }
