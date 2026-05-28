@@ -4,7 +4,7 @@ import org.example.command.EditCommand;
 
 public interface CommandService {
 
-    void executeCommand(EditCommand command);
-    String  undoCommand();
-    String  redoCommand();
+    void executeCommand(String documentId,EditCommand command);
+    String  undoCommand(String documentId);
+    String  redoCommand(String documentId);
 }

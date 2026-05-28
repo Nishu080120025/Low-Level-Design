@@ -126,7 +126,7 @@ public class DocumentServiceImpl implements DocumentService {
             return;
         }
         EditCommand command = new InsertCommand(document, startPosition, text);
-        commandService.executeCommand(command);
+        commandService.executeCommand(documentId,command);
         versionService.saveVersion(documentId, document.getContent());
         System.out.println("Text inserted successfully at position " + startPosition + " in document with id " + documentId);
         System.out.println("Current content of document with id " + documentId + ": " + document.getContent());
@@ -149,7 +149,7 @@ public class DocumentServiceImpl implements DocumentService {
             return;
         }
         EditCommand command = new DeleteCommand(document, startPosition, endPosition);
-        commandService.executeCommand(command);
+        commandService.executeCommand(documentId,command);
         versionService.saveVersion(documentId, document.getContent());
         System.out.println("Text deleted successfully from position " + startPosition + " to position " + endPosition + " in document with id " + documentId);
         System.out.println("Current content of document with id " + documentId + ": " + document.getContent());
@@ -162,7 +162,7 @@ public class DocumentServiceImpl implements DocumentService {
             System.out.println("Document not found with id: " + documentId);
             return ;
         }
-        String res=commandService.undoCommand();
+        String res=commandService.undoCommand(documentId);
         if(res==null){
             System.out.println("No edit to undo in document with id " + documentId);
             return;
@@ -179,9 +179,10 @@ public class DocumentServiceImpl implements DocumentService {
             System.out.println("Document not found with id: " + documentId);
             return;
         }
-        String res=commandService.redoCommand();
+        String res=commandService.redoCommand(documentId);
         if(res==null){
             System.out.println("No edit to redo in document with id " + documentId);
+            return;
         }
         versionService.saveVersion(documentId, document.getContent());
         System.out.println("Last edit redone successfully in document with id " + documentId);

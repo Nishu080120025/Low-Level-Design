@@ -3,48 +3,51 @@ package org.example.service.impl;
 import org.example.command.EditCommand;
 import org.example.service.CommandService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
 public class CommandServiceImpl implements CommandService {
-    private Stack<EditCommand>undoStack;
-    private Stack<EditCommand>redoStack;
+    private HashMap<String,Stack<EditCommand>> undoStackMap;
+    private HashMap<String,Stack<EditCommand>>redoStackMap;
 
     public CommandServiceImpl() {
-        this.undoStack=new Stack<>();
-        this.redoStack=new Stack<>();
+        this.undoStackMap=new HashMap<>();
+        this.redoStackMap=new HashMap<>();
     }
 
     @Override
-    public void executeCommand(EditCommand command){
+    public void executeCommand(String documentId,EditCommand command){
         // Whenever a new command is executed, we clear the redo stack because the history has changed and we can't redo commands that were undone before the new command was executed because they may no longer be valid in the new context.
         command.execute();
-        undoStack.push(command);
-        redoStack.clear();
+        undoStackMap.putIfAbsent(documentId,new Stack<>());
+        undoStackMap.get(documentId).push(command);
+        redoStackMap.clear();
         System.out.println("command executed");
     }
 
     @Override
-    public String undoCommand(){
-        if(undoStack.isEmpty()){
-            System.out.println("No commands to undo.");
+    public String undoCommand(String documentId){
+        if(!undoStackMap.containsKey(documentId)){
+            System.out.println("Undo is not possible ");
             return null;
         }
-        EditCommand command=undoStack.pop();
+        EditCommand command=undoStackMap.get(documentId).pop();
         command.undo();
-        redoStack.push(command);
+        redoStackMap.putIfAbsent(documentId,new Stack<>());
+        redoStackMap.get(documentId).push(command);
         return "command undone";
     }
 
     @Override
-    public String redoCommand(){
-        if(redoStack.isEmpty()){
-            System.out.println("No commands to redo.");
-            return null;
-        }
-        EditCommand command=redoStack.pop();
+    public String redoCommand(String documentId){
+       if(!redoStackMap.containsKey(documentId)){
+           System.out.println("redo is not possible for this document");
+           return null;
+       }
+        EditCommand command=redoStackMap.get(documentId).pop();
         command.execute();
-        undoStack.push(command);
+        undoStackMap.putIfAbsent(documentId,new Stack<>()).push(command);
         return "command redone";
     }
 }
