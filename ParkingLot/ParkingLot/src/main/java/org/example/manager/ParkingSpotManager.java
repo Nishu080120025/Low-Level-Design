@@ -12,7 +12,6 @@ public class ParkingSpotManager {
     private final ParkingRepository parkingRepository;
     public ParkingSpotManager(Map<VehicleType, Queue<ParkingSpot>> parkingSpots,ParkingRepository parkingRepository) {
         this.parkingSpots = parkingSpots;
-
         this.parkingRepository=parkingRepository;
     }
 

@@ -18,7 +18,7 @@ public class Ticket {
         this.parkingSpotId = parkingSpotId;
         this.entryTime = entryTime;
         this.exitTime = LocalDateTime.now();
-        this.paymentStatus = PaymentStatus.PENDING:
+        this.paymentStatus = PaymentStatus.PENDING;
     }
 
     public String getTicketId() {

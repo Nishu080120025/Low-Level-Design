@@ -12,4 +12,18 @@ public class Floor {
         this.parkingSpotList = parkingSpotList;
     }
 
+    public String getFloorId() {
+        return floorId;
+    }
+
+    public Map<VehicleType, List<ParkingSpot>> getParkingSpotList() {
+        return parkingSpotList;
+    }
+
+    public ParkingSpot addParkingSpot(VehicleType vehicleType,ParkingSpot parkingSpot){
+        List<ParkingSpot>parkingSpotsList=parkingSpotList.get(vehicleType);
+        parkingSpotsList.add(parkingSpot);
+        return parkingSpot;
+    }
+
 }
