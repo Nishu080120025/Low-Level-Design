@@ -12,6 +12,11 @@ public class ParkingRepositoryImpl implements ParkingRepository {
         this.parkingSpotHashMap = new HashMap<>();
         this.vehicleParkingSpotHashMap=new HashMap<>();
     }
+    @Override
+    public void initializeParkingSpot(HashMap<String,ParkingSpot>spotMap,HashMap<String,ParkingSpot>vehicleSpotMap){
+        this.vehicleParkingSpotHashMap=vehicleSpotMap;
+        this.parkingSpotHashMap=spotMap;
+    }
 
     @Override
     public void addVehicle(String vehicleId,String parkingSpotId){

@@ -7,4 +7,5 @@ public interface ParkingRepository {
     void removeVehicle(String vehicleId);
     ParkingSpot getParkingSpot(String vehicleId);
     ParkingSpot getParkingSpotByVehicleId(String vehicleId);
+    void initializeParkingSpot(java.util.HashMap<String, ParkingSpot> spotMap, java.util.HashMap<String, ParkingSpot> vehicleSpotMap);
 }

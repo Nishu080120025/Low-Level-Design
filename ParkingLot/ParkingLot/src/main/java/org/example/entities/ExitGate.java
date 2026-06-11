@@ -8,14 +8,14 @@ import org.example.strategy.PricingStrategy;
 import java.time.LocalDateTime;
 
 public class ExitGate {
-    private int exitGateId;
+    private String exitGateId;
     private final TicketService ticketService;
-    public ExitGate(int exitGateId, TicketService ticketService) {
+    public ExitGate(String exitGateId, TicketService ticketService) {
         this.exitGateId = exitGateId;
         this.ticketService = ticketService;
     }
 
-    public int getExitGateId() {
+    public String getExitGateId() {
         return exitGateId;
     }
     public void unparkVehicle(String vehicleId, String parkingSpotId, ParkingSpotManager parkingSpotManager, PaymentProcessor paymentProcessor, String ticketId, PricingStrategy pricingStrategy, VehicleType vehicleType,LocalDateTime exitTime) {

@@ -1,18 +1,48 @@
 package org.example.manager;
 
+import org.example.entities.Floor;
 import org.example.entities.ParkingSpot;
+import org.example.entities.Vehicle;
 import org.example.entities.VehicleType;
 import org.example.repository.ParkingRepository;
 
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class ParkingSpotManager {
     private Map<VehicleType, Queue<ParkingSpot>> parkingSpots;
     private final ParkingRepository parkingRepository;
-    public ParkingSpotManager(Map<VehicleType, Queue<ParkingSpot>> parkingSpots,ParkingRepository parkingRepository) {
-        this.parkingSpots = parkingSpots;
+    private List<Floor> floorList;
+    public ParkingSpotManager(Map<VehicleType, Queue<ParkingSpot>> parkingSpots,ParkingRepository parkingRepository,List<Floor> floorList) {
+        this.parkingSpots = new HashMap<>();
         this.parkingRepository=parkingRepository;
+        this.floorList=floorList;
+    }
+    public void initializeParkingSpots(){
+        for(Floor floor:floorList){
+            Map<VehicleType,List<ParkingSpot>>parkingSpotList=floor.getParkingSpotList();
+            for(Map.Entry<VehicleType,List<ParkingSpot>>entry:parkingSpotList.entrySet()){
+                VehicleType vehicleType=entry.getKey();
+                List<ParkingSpot>parkingSpots=entry.getValue();
+                for(ParkingSpot parkingSpot:parkingSpots){
+                    if(!parkingSpot.isOccupied()){
+                        Queue<ParkingSpot>availableParkingSpots=this.parkingSpots.getOrDefault(vehicleType,null);
+                        if(availableParkingSpots==null){
+                            availableParkingSpots=new LinkedList<>();
+                            this.parkingSpots.put(vehicleType,availableParkingSpots);
+                        }
+                        availableParkingSpots.offer(parkingSpot);
+                    }
+                }
+            }
+        }
+    }
+
+    public int getAvailableSpots(VehicleType vehicleType){
+        Queue<ParkingSpot>availableParkingSpots=this.parkingSpots.getOrDefault(vehicleType,null);
+        if(availableParkingSpots==null){
+            return 0;
+        }
+        return availableParkingSpots.size();
     }
 
     public void parkVehicle(String vehicleId,VehicleType vehicleType){

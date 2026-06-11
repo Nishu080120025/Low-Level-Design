@@ -11,11 +11,12 @@ import org.example.strategy.PaymentProcessor;
 import org.example.strategy.PricingStrategy;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ParkingLot {
     private ParkingSpotManager parkingSpotManager;
-    private ExitGate exitGate;
-    private EntryGate entryGate;
+    private List<ExitGate> exitGates;
+    private List<EntryGate> entryGates;
     private TicketService ticketService;
     private PaymentProcessor paymentProcessor;
     private PricingStrategy pricingStrategy;
@@ -31,27 +32,39 @@ public class ParkingLot {
 
     }
 
-    public void initialize(ExitGate exitGate, EntryGate entryGate, TicketService ticketService, PaymentProcessor paymentProcessor, PricingStrategy pricingStrategy, ParkingSpotManager parkingSpotManager, ParkingRepository parkingRepository) {
-        this.exitGate = exitGate;
-        this.entryGate = entryGate;
+    public void initialize(List<ExitGate> exitGates, List<EntryGate> entryGates, TicketService ticketService, PaymentProcessor paymentProcessor, PricingStrategy pricingStrategy, ParkingSpotManager parkingSpotManager, ParkingRepository parkingRepository) {
+        this.exitGates = exitGates;
+        this.entryGates = entryGates;
         this.ticketService = ticketService;
         this.paymentProcessor = paymentProcessor;
         this.pricingStrategy = pricingStrategy;
         this.parkingSpotManager = parkingSpotManager;
-        this.parkingRepository=parkingRepository;
+        this.parkingRepository = parkingRepository;
     }
 
-    public void parkVehicle(String vehicleId, VehicleType vehicleType, LocalDateTime entryTime) {
-        entryGate.parkVehicle(vehicleId,parkingSpotManager,entryTime,vehicleType);
+    public void parkVehicle(String gateId, String vehicleId, VehicleType vehicleType, LocalDateTime entryTime) {
+        EntryGate entryGate = entryGates.stream().
+                filter(gate -> gate.getGateId().equals(gateId))
+                .findFirst()
+                .orElse(null);
+        if (entryGate == null) {
+            System.out.println("Invalid entry gate ID: " + gateId);
+            return;
+        }
+        entryGate.parkVehicle(vehicleId, parkingSpotManager, entryTime, vehicleType);
         System.out.println("Vehicle " + vehicleId + " parked at " + entryTime);
     }
 
-    public void unparkVehicle(String vehicleId,LocalDateTime endTime){
-        ParkingSpot parkingSpot=parkingRepository.getParkingSpotByVehicleId(vehicleId);
+    public void unparkVehicle(String exitGateId, String vehicleId, LocalDateTime endTime) {
+        ParkingSpot parkingSpot = parkingRepository.getParkingSpotByVehicleId(vehicleId);
         String parkingSpotId = parkingSpot.getSpotId();
-        VehicleType vehicleType=parkingSpot.getVehicleType();
-        String ticketId =ticketService.getTicketByVehicleId(vehicleId).getTicketId();
-        exitGate.unparkVehicle(vehicleId,parkingSpotId,parkingSpotManager,paymentProcessor,ticketId,pricingStrategy,vehicleType,endTime);
+        VehicleType vehicleType = parkingSpot.getVehicleType();
+        String ticketId = ticketService.getTicketByVehicleId(vehicleId).getTicketId();
+        ExitGate exitGate = exitGates.stream().
+                filter(gate -> gate.getExitGateId().equals(exitGateId))
+                .findFirst()
+                .orElse(null);
+        exitGate.unparkVehicle(vehicleId, parkingSpotId, parkingSpotManager, paymentProcessor, ticketId, pricingStrategy, vehicleType, endTime);
         System.out.println("Vehicle " + vehicleId + " unparked at " + endTime);
     }
 
