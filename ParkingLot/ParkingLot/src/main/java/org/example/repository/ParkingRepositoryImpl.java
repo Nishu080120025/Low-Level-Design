@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.ParkingLot;
 import org.example.entities.ParkingSpot;
 
 import java.util.HashMap;
@@ -46,5 +47,11 @@ public class ParkingRepositoryImpl implements ParkingRepository {
     @Override
     public ParkingSpot getParkingSpotByVehicleId(String vehicleId) {
         return vehicleParkingSpotHashMap.getOrDefault(vehicleId, null);
+    }
+
+    @Override
+    public void addParkingSpot(String parkingSpotId, ParkingSpot parkingSpot) {
+        parkingSpotHashMap.put(parkingSpotId, parkingSpot);
+        System.out.println("Parking spot "+parkingSpotId+" added to repository");
     }
 }

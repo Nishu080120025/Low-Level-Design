@@ -1,5 +1,6 @@
 package org.example.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ public class Floor {
     }
 
     public ParkingSpot addParkingSpot(VehicleType vehicleType,ParkingSpot parkingSpot){
+        parkingSpotList.putIfAbsent(vehicleType,new ArrayList<>());
         List<ParkingSpot>parkingSpotsList=parkingSpotList.get(vehicleType);
         parkingSpotsList.add(parkingSpot);
         return parkingSpot;

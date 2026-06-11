@@ -12,4 +12,5 @@ public interface TicketRepository {
     String generateTicketId(String vehicleId, String parkingLotId, LocalDateTime startTime);
     void updateTicket(Ticket ticket);
     Ticket getTicketByVehicleId(String vehicleId);
+
 }

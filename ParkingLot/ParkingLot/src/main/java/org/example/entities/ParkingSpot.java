@@ -7,14 +7,14 @@ public abstract class ParkingSpot {
     private String spotId;
     private AtomicBoolean isOccupied;
     private VehicleType vehicleType;
-    private Integer floorNumber;
+    private String floorId;
 
-    public ParkingSpot(String spotId, VehicleType vehicleType, Integer floorNumber) {
+    public ParkingSpot(String spotId, VehicleType vehicleType, String floorId) {
 
         this.spotId = spotId;
         this.isOccupied = new AtomicBoolean(false);
         this.vehicleType = vehicleType;
-        this.floorNumber = floorNumber;
+        this.floorId = floorId;
     }
 
     public String getSpotId() {
@@ -29,8 +29,8 @@ public abstract class ParkingSpot {
         return vehicleType;
     }
 
-    public Integer getFloorNumber() {
-        return this.floorNumber;
+    public String getFloorId() {
+        return this.floorId;
     }
 
     public boolean occupySpot() {
@@ -51,7 +51,7 @@ public abstract class ParkingSpot {
                 "spotId='" + spotId + '\'' +
                 ", isOccupied=" + isOccupied +
                 ", vehicleType=" + vehicleType +
-                ", floorNumber=" + floorNumber +
+                ", floorId=" + floorId +
                 '}';
     }
 }

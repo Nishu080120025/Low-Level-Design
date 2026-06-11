@@ -28,9 +28,7 @@ public class EntryGate {
 
     @Override
     public String toString() {
-        return "EntryGate{" +
-                "gateId='" + gateId + '\'' +
-                '}';
+        return "EntryGate{" + "gateId='" + gateId + '\'' + '}';
     }
 
 
