@@ -1,6 +1,6 @@
 package org.example.strategy;
 
-import org.example.entities.VehicleType;
+import org.example.entities.enums.VehicleType;
 
 import java.time.LocalDateTime;
 

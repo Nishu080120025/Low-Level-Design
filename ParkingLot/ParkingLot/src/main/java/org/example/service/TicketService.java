@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.entities.PaymentStatus;
+import org.example.entities.enums.PaymentStatus;
 import org.example.entities.Ticket;
 
 import java.time.LocalDateTime;

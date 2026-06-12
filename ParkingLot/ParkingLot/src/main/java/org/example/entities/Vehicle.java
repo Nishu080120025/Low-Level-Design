@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import org.example.entities.enums.VehicleType;
+
 public  class Vehicle {
     private String vehicleId;
     private VehicleType vehicleType;

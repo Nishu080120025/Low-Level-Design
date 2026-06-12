@@ -1,10 +1,9 @@
 package org.example.strategy;
 
-import org.example.entities.VehicleType;
+import org.example.entities.enums.VehicleType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 public class TimeBasedPricingStrategy implements PricingStrategy{
 

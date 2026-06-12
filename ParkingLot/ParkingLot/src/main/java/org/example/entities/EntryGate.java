@@ -1,5 +1,6 @@
 package org.example.entities;
 
+import org.example.entities.enums.VehicleType;
 import org.example.manager.ParkingSpotManager;
 import org.example.service.TicketService;
 

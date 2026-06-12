@@ -2,8 +2,7 @@ package org.example.manager;
 
 import org.example.entities.Floor;
 import org.example.entities.ParkingSpot;
-import org.example.entities.Vehicle;
-import org.example.entities.VehicleType;
+import org.example.entities.enums.VehicleType;
 import org.example.repository.ParkingRepository;
 
 import java.util.*;

@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import org.example.entities.enums.VehicleType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

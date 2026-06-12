@@ -1,7 +1,8 @@
 package org.example.entities;
 
+import org.example.entities.enums.VehicleType;
+
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class ParkingSpot {
     private String spotId;

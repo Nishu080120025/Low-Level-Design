@@ -1,6 +1,10 @@
 package org.example;
 
 import org.example.entities.*;
+import org.example.entities.enums.PaymentMethod;
+import org.example.entities.enums.VehicleType;
+import org.example.factory.ParkingSpotFactory;
+import org.example.factory.PaymentProcessorFactory;
 import org.example.manager.ParkingSpotManager;
 import org.example.repository.ParkingRepository;
 import org.example.repository.ParkingRepositoryImpl;
@@ -27,7 +31,6 @@ public class ParkingLotMain {
         ParkingRepository parkingRepository = new ParkingRepositoryImpl();
         TicketRepository ticketRepository = new TicketRepositoryImpl();
         TicketService ticketService = new TicketServiceImpl(ticketRepository);
-        PaymentProcessor paymentProcessor = new CreditCardPaymentProcessor();
         PricingStrategy pricingStrategy = new TimeBasedPricingStrategy();
 
         System.out.println("Parking lot initialized successfully!");
@@ -35,9 +38,9 @@ public class ParkingLotMain {
         System.out.println("Now initialising ParkingSpots and vehicle and all other entities.....");
         System.out.println("------------------------------");
 
-        ParkingSpot carSpot1 = new CarParkingSpot("C1", "F1");
-        ParkingSpot carSpot2 = new CarParkingSpot("C2", "F1");
-        ParkingSpot bikeSpot1 = new BikeParkingSpot("B1", "F1");
+        ParkingSpot carSpot1 = ParkingSpotFactory.createParkingSpot(VehicleType.CAR, "C1", "F1");
+        ParkingSpot carSpot2 = ParkingSpotFactory.createParkingSpot(VehicleType.CAR, "C2", "F1");
+        ParkingSpot bikeSpot1 = ParkingSpotFactory.createParkingSpot(VehicleType.MOTORCYCLE, "M1", "F1");
         parkingRepository.addParkingSpot(carSpot1.getSpotId(), carSpot1);
         parkingRepository.addParkingSpot(carSpot2.getSpotId(), carSpot2);
         parkingRepository.addParkingSpot(bikeSpot1.getSpotId(), bikeSpot1);
@@ -60,7 +63,7 @@ public class ParkingLotMain {
         exitGateList.add(exitGate1);
         ParkingSpotManager parkingSpotManager = new ParkingSpotManager(availableSpots, parkingRepository, floorList);
         ParkingLot parkingLot = ParkingLot.getInstance();
-        parkingLot.initialize(exitGateList, entryGateList, ticketService, paymentProcessor, pricingStrategy, parkingSpotManager, parkingRepository);
+        parkingLot.initialize(exitGateList, entryGateList, ticketService, PaymentProcessorFactory.choosePaymentProcessor(PaymentMethod.CREDIT_CARD), pricingStrategy, parkingSpotManager, parkingRepository);
 
         System.out.println("Parking lot setup completed successfully!");
         System.out.println("------------------------------");

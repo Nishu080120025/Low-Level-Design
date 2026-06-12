@@ -3,7 +3,7 @@ package org.example;
 import org.example.entities.EntryGate;
 import org.example.entities.ExitGate;
 import org.example.entities.ParkingSpot;
-import org.example.entities.VehicleType;
+import org.example.entities.enums.VehicleType;
 import org.example.manager.ParkingSpotManager;
 import org.example.repository.ParkingRepository;
 import org.example.service.TicketService;

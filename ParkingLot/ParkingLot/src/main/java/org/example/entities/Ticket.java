@@ -1,7 +1,8 @@
 package org.example.entities;
 
+import org.example.entities.enums.PaymentStatus;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 public class Ticket {
