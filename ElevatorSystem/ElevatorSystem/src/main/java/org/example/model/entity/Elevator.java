@@ -82,6 +82,7 @@ public class Elevator implements Runnable {
 
     public void setIdle() {
         this.direction = Direction.IDLE;
+        this.state = new IdleState();
     }
 
     public void openDoor() {
@@ -112,7 +113,6 @@ public class Elevator implements Runnable {
             } else if (request.getFloor() < currentFloor.get()) {
                 downRequest.add(targetFloor);
             }
-
             if (targetFloor == this.getCurrentFloor()) {
                 if (doorStatus == DoorStatus.CLOSED) {
                     openDoor();

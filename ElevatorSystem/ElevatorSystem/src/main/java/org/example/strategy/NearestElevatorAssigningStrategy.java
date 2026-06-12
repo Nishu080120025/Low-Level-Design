@@ -12,8 +12,26 @@ public class NearestElevatorAssigningStrategy implements ElevatorAssigningStrate
     public Elevator findBestElevator(HashMap<Integer, Elevator> elevatorHashMap, ExternalRequest request) {
         Elevator bestElevator = null;
         int minDistance = Integer.MAX_VALUE;
+        boolean isMovingTowards = false;
+        boolean isIdle = false;
         for (Elevator elevator : elevatorHashMap.values()) {
-            if (elevator.getDirection() == Direction.IDLE || elevator.getDirection() == request.getDirection()) {
+            isIdle = elevator.getDirection() == Direction.IDLE;
+            if (elevator.getDirection() == Direction.UP && request.getFloor() >= elevator.getCurrentFloor()) {
+                isMovingTowards = true;
+            } else if (elevator.getDirection() == Direction.DOWN && request.getFloor() <= elevator.getCurrentFloor()) {
+                isMovingTowards = true;
+            }
+            if (isIdle || isMovingTowards) {
+                int distance = Math.abs(elevator.getCurrentFloor() - request.getFloor());
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    bestElevator = elevator;
+                }
+            }
+        }
+
+        if (bestElevator == null) {
+            for (Elevator elevator : elevatorHashMap.values()) {
                 int distance = Math.abs(elevator.getCurrentFloor() - request.getFloor());
                 if (distance < minDistance) {
                     minDistance = distance;

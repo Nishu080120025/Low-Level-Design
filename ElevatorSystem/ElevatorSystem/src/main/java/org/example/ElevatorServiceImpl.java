@@ -38,7 +38,7 @@ public class ElevatorServiceImpl implements ElevatorService {
             Elevator assignedElevator = elevatorAssigningStrategy.findBestElevator(elevatorMap, request);
             if (assignedElevator != null) {
                 assignedElevator.addRequest(request);
-                System.out.println("Assigned Elevator " + assignedElevator.getId() + " to External Request at floor " + request.getFloor() + " going " + request.getDirection());
+                System.out.println("Assigned Elevator " + assignedElevator.getId() + " to External Request at floor " + request.getFloor() + " going " + assignedElevator.getDirection());
             } else {
                 System.out.println("No available elevator for External Request at floor " + request.getFloor() + " going " + request.getDirection());
             }
@@ -57,4 +57,8 @@ public class ElevatorServiceImpl implements ElevatorService {
         }
     }
 
+    @Override
+    public void shutDownElevators() {
+        executorService.shutdownNow();
+    }
 }

@@ -9,11 +9,12 @@ public class MoveDownState implements ElevatorState {
     public void move(Elevator elevator) {
         if (elevator.getDownRequest().isEmpty()) {
             elevator.setIdle();
-            System.out.println("No down requests. Elevator is now idle.");
+            elevator.closeDoor();
+            System.out.println("No down requests. Elevator is now idle."+elevator.getId());
             return;
         }
 
-        int targetFloor = elevator.getDownRequest().last();
+        int targetFloor = elevator.getDownRequest().first();
         elevator.setCurrentFloor(elevator.getCurrentFloor() - 1);
         if (targetFloor == elevator.getCurrentFloor()) {
             elevator.getDownRequest().pollFirst();
@@ -21,11 +22,6 @@ public class MoveDownState implements ElevatorState {
             System.out.println("Arrived at floor " + targetFloor + ". Serving down request.");
         }
 
-        if (elevator.getDownRequest().isEmpty()) {
-            elevator.setIdle();
-            elevator.closeDoor();
-            System.out.println("No more down requests. Elevator is now idle.");
-        }
     }
 
     @Override

@@ -8,4 +8,5 @@ public interface ElevatorService {
     void handleExternalRequests(List<ExternalRequest> externalRequestList);
     void handleInternalRequest(int id, int targetFloor);
     void startElevators();
+    void shutDownElevators();
 }
