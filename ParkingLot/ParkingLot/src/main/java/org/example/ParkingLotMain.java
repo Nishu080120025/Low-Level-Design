@@ -12,8 +12,6 @@ import org.example.repository.TicketRepository;
 import org.example.repository.TicketRepositoryImpl;
 import org.example.service.TicketService;
 import org.example.service.TicketServiceImpl;
-import org.example.strategy.CreditCardPaymentProcessor;
-import org.example.strategy.PaymentProcessor;
 import org.example.strategy.PricingStrategy;
 import org.example.strategy.TimeBasedPricingStrategy;
 

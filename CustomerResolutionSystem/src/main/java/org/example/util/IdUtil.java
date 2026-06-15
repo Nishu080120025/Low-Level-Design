@@ -1,0 +1,9 @@
+package org.example.util;
+
+import java.util.UUID;
+
+public class IdUtil {
+    public static String generateUniqueId(){
+        return UUID.randomUUID().toString();
+    }
+}
