@@ -114,12 +114,12 @@ public class ResolutionSystemManager {
 
     }
 
-    public void viewIssuesByTransactionId(String transactionId){
+    public Issues viewIssuesByTransactionId(String transactionId){
         Issues issues=issueService.getIssueByTransactionId(transactionId);
         if(issues==null){
             System.out.println("No issue found for transaction ID: "+transactionId);
-            return;
+            return null;
         }
-        System.out.println("Issue details for transaction ID "+transactionId+": "+issues);
+        return issues;
     }
 }

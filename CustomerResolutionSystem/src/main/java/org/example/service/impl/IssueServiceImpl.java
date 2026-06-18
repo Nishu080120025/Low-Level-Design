@@ -3,6 +3,7 @@ package org.example.service.impl;
 import org.example.entities.Agent;
 import org.example.entities.Issues;
 import org.example.entities.enums.ResolutionStatus;
+import org.example.repository.AgentRepository;
 import org.example.repository.IssueRepository;
 import org.example.service.IssueService;
 import org.example.strategy.AssignmentStrategy;
@@ -15,10 +16,12 @@ public class IssueServiceImpl implements IssueService {
     private final IssueRepository issueRepository;
     private final IdUtil idUtil;
     private final AssignmentStrategy assignmentStrategy;
-    public IssueServiceImpl(IssueRepository issueRepository, IdUtil idUtil, AssignmentStrategy assignmentStrategy) {
+    private final AgentRepository agentRepository;
+    public IssueServiceImpl(IssueRepository issueRepository, IdUtil idUtil, AssignmentStrategy assignmentStrategy,AgentRepository agentRepository) {
         this.issueRepository = issueRepository;
         this.idUtil = idUtil;
         this.assignmentStrategy = assignmentStrategy;
+        this.agentRepository=agentRepository;
     }
 
     @Override
@@ -34,7 +37,9 @@ public class IssueServiceImpl implements IssueService {
             return;
         }
         issues.setAssignedAgent(assignedAgent.getUserId());
+        assignedAgent.addIssue(issueId);
         issueRepository.updateIssue(issues);
+        agentRepository.updateAgent(assignedAgent);
         System.out.println("Issue with ID "+issueId+" assigned to agent "+assignedAgent.getName());
     }
 

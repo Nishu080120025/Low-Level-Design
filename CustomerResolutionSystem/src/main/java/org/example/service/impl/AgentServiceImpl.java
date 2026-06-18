@@ -41,6 +41,7 @@ public class AgentServiceImpl implements AgentService {
         }
         issues.setResolutionStatus(ResolutionStatus.RESOLVED);
         issues.setDescription(resolutionDetails);
+
         if(agent.getCurrentIssue().equals(issueId)){
             agent.promoteWaitingIssueToCurrent();
         }
