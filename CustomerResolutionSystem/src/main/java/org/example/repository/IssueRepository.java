@@ -24,5 +24,6 @@ public interface IssueRepository {
 
     List<Issues> getAllIssuesByIssueType(IssueType issueType);
 
+    List<Issues>getAllIssuesByCustomerEmail(String email);
 
 }

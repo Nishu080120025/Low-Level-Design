@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import org.example.entities.Agent;
 import org.example.entities.Issues;
+import org.example.entities.enums.ResolutionStatus;
 import org.example.repository.AgentRepository;
 import org.example.repository.IssueRepository;
 import org.example.service.AgentService;
@@ -28,30 +29,31 @@ public class AgentServiceImpl implements AgentService {
             System.out.println("Issue with ID " + issueId + " not found.");
             return;
         }
-        Agent agent = issues.getAssignedAgent();
-        if (agent == null) {
+        String agentId = issues.getAssignedAgentId();
+        if (agentId == null) {
             System.out.println("Issue with ID " + issueId + " is not assigned to any agent.");
             return;
         }
-        if (agent.getCurrentIssue().getIssueId().equals(issueId)) {
-            agent.resolveCurrentIssue();
-            issues.setDescription(resolutionDetails);
-        } else {
-            Issues issue = agent.getWaitingTickets().stream().filter(i -> i.getIssueId().equals(issueId)).findFirst().orElse(null);
-            if (issue != null) {
-                agent.resolveWaitingIssue(issueId);
-                issues.setDescription(resolutionDetails);
-            } else {
-                System.out.println("Issue with ID " + issueId + " is not assigned to agent " + agent.getName());
-                return;
-            }
+        Agent agent = agentRepository.getAgent(agentId);
+        if (agent == null) {
+            System.out.println("Agent with ID " + agentId + " not found.");
+            return;
         }
+        issues.setResolutionStatus(ResolutionStatus.RESOLVED);
+        issues.setDescription(resolutionDetails);
+        if(agent.getCurrentIssue().equals(issueId)){
+            agent.promoteWaitingIssueToCurrent();
+        }
+        else if(agent.getWaitingTickets().contains(issueId)){
+            agent.removeWaitingIssue(issueId);
+        }
+        agentRepository.updateAgent(agent);
         issueRepository.updateIssue(issues);
         System.out.println("Issue with ID " + issueId + " resolved by agent " + agent.getName());
     }
 
     @Override
-    public List<Issues> viewAssignedIssues(String agentId){
+    public List<String> viewAssignedIssues(String agentId){
         Agent agent=agentRepository.getAgent(agentId);
         if(agent==null){
             System.out.println("Agent with ID "+agentId+" not found.");

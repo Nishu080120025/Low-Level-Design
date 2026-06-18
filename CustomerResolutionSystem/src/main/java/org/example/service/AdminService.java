@@ -12,5 +12,5 @@ public interface AdminService {
     void removeAgent(String agentId);
     Agent updateAgent(String agentId,String email,String name,List<IssueType>expertiseList,String phoneNumber);
     List<Agent>viewAllAgent();
-    Map<String,List<Issues>> viewAgentsWorkHistory();
+    Map<String,List<String>> viewAgentsWorkHistory();
 }

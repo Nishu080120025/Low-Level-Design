@@ -11,7 +11,9 @@ import java.util.Map;
 
 public class IssueRepositoryImpl implements IssueRepository {
     private Map<String, Issues> issueMap;
-
+    public IssueRepositoryImpl(Map<String, Issues> issueMap) {
+        this.issueMap = issueMap;
+    }
     @Override
     public void addIssue(String issueId, Issues issues) {
         issueMap.put(issueId, issues);
@@ -84,4 +86,19 @@ public class IssueRepositoryImpl implements IssueRepository {
         }
         return issuesByIssueType;
     }
+
+
+    @Override
+    public List<Issues>getAllIssuesByCustomerEmail(String email){
+
+        List<Issues>issuesByCustomerEmail=new ArrayList<>();
+        for(Issues issue:issueMap.values()){
+            if(issue.getCustomerId().equals(email)){
+                issuesByCustomerEmail.add(issue);
+            }
+        }
+        return issuesByCustomerEmail;
+    }
+
+
 }

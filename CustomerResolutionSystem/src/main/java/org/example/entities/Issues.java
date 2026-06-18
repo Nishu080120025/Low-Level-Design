@@ -9,17 +9,17 @@ public class Issues {
     private String description;
     private ResolutionStatus resolutionStatus;
     private IssueType issueType;
-    private Agent assignedAgent;
+    private String  assignedAgentId;
     private String customerId;
 
-    public Issues(String issueId, String transactionId, String description, ResolutionStatus resolutionStatus, IssueType issueType, String customerId, Agent assignedAgent) {
+    public Issues(String issueId, String transactionId, String description, ResolutionStatus resolutionStatus, IssueType issueType, String customerId, String  assignedAgentId) {
         this.issueId = issueId;
         this.transactionId = transactionId;
         this.description = description;
         this.resolutionStatus = resolutionStatus;
         this.issueType = issueType;
         this.customerId = customerId;
-        this.assignedAgent = assignedAgent;
+        this.assignedAgentId = assignedAgentId;
     }
 
     public String getIssueId() {
@@ -55,15 +55,11 @@ public class Issues {
     }
 
     public String getAssignedAgentId() {
-        return this.assignedAgent.getUserId();
+        return this.assignedAgentId;
     }
 
-    public Agent getAssignedAgent() {
-        return assignedAgent;
-    }
-
-    public void setAssignedAgent(Agent assignedAgent) {
-        this.assignedAgent = assignedAgent;
+    public void setAssignedAgent(String assignedAgentId) {
+        this.assignedAgentId = assignedAgentId;
     }
 
     public String getTransactionId() {
@@ -79,7 +75,7 @@ public class Issues {
                 ", resolutionStatus=" + resolutionStatus +
                 ", issueType=" + issueType +
                 ", customerId='" + customerId + '\'' +
-                ", assignedAgent=" + (assignedAgent != null ? assignedAgent.getUserId() : "null") +
+                ", assignedAgent=" + (assignedAgentId != null ? assignedAgentId: "null") +
                 '}';
     }
 

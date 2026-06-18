@@ -11,7 +11,9 @@ public interface IssueService {
 
     Issues getIssueById(String issueId);
 
-    List<Issues>getAllIssues();
+    List<Issues> getAllIssues();
 
-    void updateIssue(String issueId, ResolutionStatus resolutionStatus,String description);
+    void updateIssue(String issueId, ResolutionStatus resolutionStatus, String description);
+
+    Issues getIssueByTransactionId(String transactionId);
 }

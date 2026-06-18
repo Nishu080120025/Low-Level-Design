@@ -11,6 +11,11 @@ import java.util.List;
 public class AgentRepositoryImpl implements AgentRepository {
     private HashMap<String, Agent> agentMap;
 
+    public AgentRepositoryImpl(HashMap<String, Agent> agentMap) {
+        this.agentMap = agentMap;
+    }
+
+
     @Override
     public void addAgent(String agentId, Agent agent) {
         agentMap.put(agentId, agent);

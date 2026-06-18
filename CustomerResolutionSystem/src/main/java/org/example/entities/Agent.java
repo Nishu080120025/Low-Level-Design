@@ -10,12 +10,12 @@ import java.util.Queue;
 import java.util.Set;
 
 public class Agent extends Users {
-    private List<Issues> assignedTickets;
-    private Queue<Issues> waitingTickets;
+    private List<String> assignedTickets;
+    private Queue<String> waitingTickets;
     private Set<IssueType> expertise;
-    private Issues currentIssue;
+    private String currentIssue;
 
-    public Agent(String agentId, String name, List<Issues> assignedTickets, String email, String phoneNumber, Queue<Issues> waitingTickets, Issues currentIssue, Set<IssueType> expertise) {
+    public Agent(String agentId, String name, List<String> assignedTickets, String email, String phoneNumber, Queue<String> waitingTickets, String currentIssue, Set<IssueType> expertise) {
         super(agentId, name, UserRole.AGENT, email, phoneNumber);
         this.assignedTickets = assignedTickets;
         this.waitingTickets = waitingTickets;
@@ -24,19 +24,19 @@ public class Agent extends Users {
 
     }
 
-    public List<Issues> getAssignedTickets() {
+    public List<String> getAssignedTickets() {
         return assignedTickets;
     }
 
-    public void setAssignedTickets(List<Issues> assignedTickets) {
+    public void setAssignedTickets(List<String> assignedTickets) {
         this.assignedTickets = assignedTickets;
     }
 
-    public Queue<Issues> getWaitingTickets() {
+    public Queue<String> getWaitingTickets() {
         return waitingTickets;
     }
 
-    public Issues getCurrentIssue() {
+    public String getCurrentIssue() {
         return currentIssue;
     }
 
@@ -56,44 +56,28 @@ public class Agent extends Users {
         return issueType;
     }
 
-    public Issues addIssue(Issues issue) {
+    public String addIssue(String issueId) {
         if (currentIssue == null) {
-            currentIssue = issue;
+            currentIssue = issueId;
         } else {
-            waitingTickets.add(issue);
+            waitingTickets.add(issueId);
         }
-        assignedTickets.add(issue);
-        return issue;
+        assignedTickets.add(issueId);
+        return issueId;
     }
 
-    public Issues resolveCurrentIssue() {
-        Issues presentIssue = currentIssue;
-        if (presentIssue != null) {
-            presentIssue.setResolutionStatus(ResolutionStatus.RESOLVED);
-            assignedTickets.stream().filter(issue -> issue.getIssueId().equals(presentIssue.getIssueId()))
-                    .findFirst()
-                    .ifPresent(issue -> issue.setResolutionStatus(ResolutionStatus.RESOLVED));
-            if (!waitingTickets.isEmpty()) {
-                currentIssue = waitingTickets.poll();
-            }
-        } else {
-            System.out.println("No current issue to resolve.");
-            return null;
-        }
-        return presentIssue;
-    }
-
-    public Issues resolveWaitingIssue(String issueId) {
-        Iterator<Issues> issuesIterator = waitingTickets.iterator();
-        while (issuesIterator.hasNext()) {
-            Issues issue = issuesIterator.next();
-            if (issue.getIssueId().equals(issueId)) {
-                issue.setResolutionStatus(ResolutionStatus.RESOLVED);
-                assignedTickets.stream().filter(i -> i.getIssueId().equals(issueId)).findFirst().ifPresent(i -> i.setResolutionStatus(ResolutionStatus.RESOLVED));
-                issuesIterator.remove();
-                return issue;
-            }
+    public String promoteWaitingIssueToCurrent(){
+        if(currentIssue==null && !waitingTickets.isEmpty()){
+            currentIssue=waitingTickets.poll();
+            return currentIssue;
         }
         return null;
     }
+
+    public String removeWaitingIssue(String issueId){
+        waitingTickets.remove(issueId);
+        return "Issue with ID "+issueId+" removed from waiting tickets.";
+    }
+
+
 }

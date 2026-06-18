@@ -84,4 +84,14 @@ public class CustomerServiceImpl implements CustomerService {
         Issues concernedIssue=issues.stream().filter(i->i.getIssueId().equals(issueId)).findFirst().orElse(null);
         System.out.println("Concerned issues is : "+concernedIssue);
     }
+
+    @Override
+    public Customer getCustomerById(String customerId){
+        return customerRepositiory.getCustomer(customerId);
+    }
+
+    @Override
+    public Customer getCustomerByEmail(String email){
+        return customerRepositiory.getCustomerByEmail(email);
+    }
 }

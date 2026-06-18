@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AdminService {
     public Agent addAgent(String agentEmail, String agentName, List<IssueType> expertiseList){
         String agentId=idUtil.generateUniqueId();
         HashSet<IssueType>issueTypeSet=new HashSet<>(expertiseList);
-        Agent agent=new Agent(agentId,agentName,new ArrayList<Issues>(),agentEmail,null,new LinkedList<>(),null,issueTypeSet);
+        Agent agent=new Agent(agentId,agentName,new ArrayList<String>(),agentEmail,null,new LinkedList<String>(),null,issueTypeSet);
         agentRepository.addAgent(agentId,agent);
         return agent;
     }
@@ -59,12 +59,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public HashMap<String ,List<Issues>> viewAgentsWorkHistory(){
-        HashMap<String,List<Issues>>agentsHistoryMap=new HashMap<>();
+    public HashMap<String ,List<String>> viewAgentsWorkHistory(){
+        HashMap<String,List<String>>agentsHistoryMap=new HashMap<>();
         List<Agent>agentList=agentRepository.getAllAgents();
         for(Agent agent:agentList){
             agentsHistoryMap.putIfAbsent(agent.getUserId(),new ArrayList<>());
-            List<Issues>issueList=agent.getAssignedTickets();
+            List<String>issueList=agent.getAssignedTickets();
             agentsHistoryMap.get(agent.getUserId()).addAll(issueList);
         }
         return agentsHistoryMap;

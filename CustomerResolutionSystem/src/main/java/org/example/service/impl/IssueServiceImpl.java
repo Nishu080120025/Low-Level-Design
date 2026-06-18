@@ -33,7 +33,7 @@ public class IssueServiceImpl implements IssueService {
             System.out.println("No available agent found for issue ID "+issueId);
             return;
         }
-        issues.setAssignedAgent(assignedAgent);
+        issues.setAssignedAgent(assignedAgent.getUserId());
         issueRepository.updateIssue(issues);
         System.out.println("Issue with ID "+issueId+" assigned to agent "+assignedAgent.getName());
     }
@@ -65,4 +65,13 @@ public class IssueServiceImpl implements IssueService {
         issueRepository.updateIssue(issues);
         System.out.println("Issue with ID "+issueId+" updated successfully.");
     }
+
+    @Override
+    public Issues getIssueByTransactionId(String transactionId){
+        return issueRepository.getAllIssues().stream()
+                .filter(issue -> issue.getTransactionId().equals(transactionId))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
