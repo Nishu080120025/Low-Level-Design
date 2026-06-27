@@ -11,10 +11,11 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
-    public Patient registerPatient(String name){
+    public String registerPatient(String name){
         String patientId= IdUtil.generateId();
         Patient patient=new Patient(patientId,name);
-        return patientRepository.registerPatient(patientId,patient);
+         patientRepository.registerPatient(patientId,patient);
+         return patientId;
     }
 
     public Patient getPatientById(String patientId){

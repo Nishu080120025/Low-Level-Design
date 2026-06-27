@@ -9,6 +9,7 @@ import org.example.util.IdUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -17,10 +18,10 @@ public class Doctor {
     private String id;
     private String name;
     private Specialisation specialisation;
-    HashMap<String, Boolean> availableSlots;
+    Map<String, Boolean> availableSlots;
     private Double rating;
 
-    public Doctor(String name, Specialisation specialisation, Double rating, HashMap<String, Boolean> availableSlots) {
+    public Doctor(String name, Specialisation specialisation, Double rating, Map<String, Boolean> availableSlots) {
         this.id = IdUtil.generateId();
         this.name = name;
         this.specialisation = specialisation;

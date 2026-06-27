@@ -6,6 +6,7 @@ import org.example.repository.DoctorRepository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DoctorRepositoryImpl implements DoctorRepository {
     private final HashMap<String, Doctor> doctorMap;
@@ -31,7 +32,7 @@ public class DoctorRepositoryImpl implements DoctorRepository {
             throw new DoctorNotFoundException("Doctor with ID " + doctorId + " not found.");
         }
         Doctor doctor= doctorMap.get(doctorId);
-        HashMap<String, Boolean> availabilityMap=doctor.getAvailableSlots();
+        Map<String, Boolean> availabilityMap=doctor.getAvailableSlots();
         slots.stream().filter(slot->availabilityMap.containsKey(slot)).forEach(slot->availabilityMap.put(slot,true));
     }
 

@@ -55,6 +55,7 @@ public class BookingService {
         }
         if(doctor.getAvailableSlots().get(slot)==true){
             Booking booking =new Booking(slot,doctorId,patientId, BookingStatus.CONFIRMED);
+            doctor.getAvailableSlots().put(slot,false);
             bookingRepository.saveBooking(booking.getBookingId(),booking);
             return booking.getBookingId();
         }
@@ -78,12 +79,15 @@ public class BookingService {
         String doctorSlot=booking.getDoctorId()+"_"+booking.getSlot();
         String waitlistedBookingId=bookingRepository.removeBookingFromWaitlist(doctorSlot);
         if(waitlistedBookingId==null){
+            Doctor doctor=doctorRepository.getDoctorById(booking.getDoctorId());
+            doctor.getAvailableSlots().put(booking.getSlot(),true);
             return "Booking with id "+bookingId+" cancelled successfully";
         }
         Booking waitlistedBooking=bookingRepository.getBookingById(waitlistedBookingId);
         waitlistedBooking.setStatus(BookingStatus.CONFIRMED);
         bookingRepository.saveBooking(waitlistedBookingId,waitlistedBooking);
-        return "Booking with id "+bookingId+" cancelled successfully and waitlisted booking with id "+waitlistedBookingId+" confirmed";
+        System.out.println("Booking with id "+bookingId+" cancelled successfully and waitlisted booking with id "+waitlistedBookingId+" confirmed");
+        return booking.getBookingId();
     }
 
     public List<String>getAllBookingsByPatientId(String patientId) {

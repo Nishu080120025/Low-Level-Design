@@ -23,7 +23,7 @@ public class BookingRepositoryImpl implements BookingRepository {
 
     @Override
     public Booking cancelBooking(String bookingId) {
-        if (bookingMap.containsKey(bookingId)) {
+        if (!bookingMap.containsKey(bookingId)) {
             throw new BookingNotFoundException("Booking with ID " + bookingId + " not found.");
         }
         return bookingMap.remove(bookingId);
