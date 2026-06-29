@@ -62,30 +62,33 @@ public class DispenseState implements CoffeeState {
 //        coffeeMachine.setSelectedCoffee(null);
 
         Coffee selectedCoffee=coffeeMachine.getSelectedCoffee();
-        for(String ingredients:selectedCoffee.getRecipe().getIngredients().keySet()){
-            int requiredAmount=selectedCoffee.getRecipe().getIngredients().get(ingredients);
-            boolean isOutOfStockIngredient=coffeeMachine.checkIfIngredientOutOfStock(ingredients);
-            if(isOutOfStockIngredient){
+        for(String ingredients:selectedCoffee.getRecipe().getIngredients().keySet()) {
+            int requiredAmount = selectedCoffee.getRecipe().getIngredients().get(ingredients);
+            boolean isOutOfStockIngredient = coffeeMachine.checkIfIngredientOutOfStock(ingredients);
+            if (isOutOfStockIngredient) {
                 System.out.println("Cannot dispense coffee. Ingredient " + ingredients + " is out of stock.");
                 System.out.println("Refund the amount " + coffeeMachine.getSelectedCoffee().getPrice());
                 coffeeMachine.setSelectedCoffee(null);
                 coffeeMachine.setCurrentState(coffeeMachine.getOutOfStockState());
                 return;
             }
-            boolean hasAvalaiblity=coffeeMachine.checkIngredientAvailability(ingredients,requiredAmount);
-            if(!hasAvalaiblity){
+            boolean hasAvalaiblity = coffeeMachine.checkIngredientAvailability(ingredients, requiredAmount);
+            if (!hasAvalaiblity) {
                 System.out.println("Cannot dispense coffee. Ingredient " + ingredients + " is insufficient for the selected coffee.");
                 System.out.println("Refund the amount " + coffeeMachine.getSelectedCoffee().getPrice());
                 coffeeMachine.setSelectedCoffee(null);
                 coffeeMachine.setCurrentState(coffeeMachine.getIdleState());
                 return;
             }
-
+        }
             System.out.println("Dispensing coffee: " + selectedCoffee.getName());
-            coffeeMachine.updateInventory(ingredients, requiredAmount);
+            for(String ingredient:selectedCoffee.getRecipe().getIngredients().keySet()){
+                int amountRequired=selectedCoffee.getRecipe().getIngredients().get(ingredient);
+                coffeeMachine.updateInventory(ingredient, amountRequired);
+            }
             coffeeMachine.setSelectedCoffee(null);
             coffeeMachine.setCurrentState(coffeeMachine.getIdleState());
-        }
+
     }
 
     @Override

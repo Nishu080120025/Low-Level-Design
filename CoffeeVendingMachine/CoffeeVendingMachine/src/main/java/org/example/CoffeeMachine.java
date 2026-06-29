@@ -83,5 +83,13 @@ public class CoffeeMachine {
         this.currentState.refillIngredients(ingredients);
     }
 
+    public String showInventory() {
+        StringBuilder inventoryStatus = new StringBuilder("Current Inventory:\n");
+        for (Map.Entry<String, Integer> entry : inventory.getQuantityMap().entrySet()) {
+            inventoryStatus.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        return inventoryStatus.toString();
+    }
+
 
 }

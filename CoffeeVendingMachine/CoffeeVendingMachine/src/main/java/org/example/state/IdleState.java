@@ -18,7 +18,7 @@ public class IdleState implements CoffeeState {
         Coffee selectedCoffee=coffeeMachine.getMenu().getMenuMap().get(coffeeName);
         if(selectedCoffee==null){
             System.out.println("Selected coffee is not available in the menu.");
-
+            return;
         }
         coffeeMachine.setSelectedCoffee(selectedCoffee);
         coffeeMachine.setCurrentState(coffeeMachine.getPaymentState());
