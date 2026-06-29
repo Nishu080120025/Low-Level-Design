@@ -35,7 +35,7 @@ public class CoffeeMachine {
         this.menu = new Menu();
     }
 
-    public void refillInventory(HashMap<String, Integer> ingredients) {
+    public void refillInventory(Map<String, Integer> ingredients) {
         for (Map.Entry<String, Integer> entry : ingredients.entrySet()) {
             inventory.addIngredient(entry.getKey(), entry.getValue());
         }
@@ -54,8 +54,34 @@ public class CoffeeMachine {
         Integer availableQuantity = inventory.getQuantityMap().get(ingredient);
         return availableQuantity != null && availableQuantity <= 0;
     }
-    public void addCoffeeToMenu(Coffee coffee){
+
+    public void addCoffeeToMenu(Coffee coffee) {
         menu.addCoffeeToMenu(coffee);
     }
+
+    public String showMenu() {
+        return menu.showMenu();
+    }
+
+    public synchronized void selectCoffee(String coffeeName) {
+        this.currentState.selectCoffee(coffeeName);
+    }
+
+    public synchronized void insertPayment(double amount) {
+        this.currentState.insertPayment(amount);
+    }
+
+    public synchronized void dispenseCoffee() {
+        this.currentState.dispenseCoffee();
+    }
+
+    public synchronized void cancelOrder() {
+        this.currentState.cancelOrder();
+    }
+
+    public synchronized void refillIngredients(Map<String, Integer> ingredients) {
+        this.currentState.refillIngredients(ingredients);
+    }
+
 
 }

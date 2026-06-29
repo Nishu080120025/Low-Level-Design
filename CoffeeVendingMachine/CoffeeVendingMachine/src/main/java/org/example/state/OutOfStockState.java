@@ -2,6 +2,8 @@ package org.example.state;
 
 import org.example.CoffeeMachine;
 
+import java.util.Map;
+
 public class OutOfStockState implements CoffeeState{
     private CoffeeMachine coffeeMachine;
 
@@ -26,8 +28,9 @@ public class OutOfStockState implements CoffeeState{
     public synchronized void cancelOrder() {
         System.out.println("Cannot cancel order. The machine is out of stock.");
     }
+
     @Override
-    public synchronized void refillIngredients(java.util.HashMap<String, Integer> ingredients) {
+    public synchronized void refillIngredients(Map<String, Integer> ingredients) {
         coffeeMachine.refillInventory(ingredients);
         System.out.println("Ingredients refilled. The machine is now operational.");
         coffeeMachine.setCurrentState(coffeeMachine.getIdleState());

@@ -3,6 +3,7 @@ package org.example.state;
 import org.example.models.Coffee;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface CoffeeState {
 
@@ -14,5 +15,5 @@ public interface CoffeeState {
 
     void cancelOrder();
 
-    void refillIngredients(HashMap<String, Integer> ingredients);
+    void refillIngredients(Map<String, Integer> ingredients);
 }

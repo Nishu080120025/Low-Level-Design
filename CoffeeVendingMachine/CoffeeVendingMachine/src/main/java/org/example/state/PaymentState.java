@@ -4,6 +4,8 @@ import org.example.CoffeeMachine;
 import org.example.models.Payment;
 import org.example.models.PaymentMethod;
 
+import java.util.Map;
+
 public class PaymentState implements CoffeeState{
 
     private CoffeeMachine coffeeMachine;
@@ -46,7 +48,7 @@ public class PaymentState implements CoffeeState{
     }
 
     @Override
-    public void refillIngredients(java.util.HashMap<String, Integer> ingredients) {
+    public void refillIngredients(Map<String, Integer> ingredients) {
         System.out.println("Cannot refill ingredients during payment. Please complete or cancel the payment first.");
     }
 

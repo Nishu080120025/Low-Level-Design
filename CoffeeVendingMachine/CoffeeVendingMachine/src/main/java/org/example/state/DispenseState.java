@@ -3,6 +3,8 @@ package org.example.state;
 import org.example.CoffeeMachine;
 import org.example.models.Coffee;
 
+import java.util.Map;
+
 public class DispenseState implements CoffeeState {
 
     private CoffeeMachine coffeeMachine;
@@ -92,7 +94,7 @@ public class DispenseState implements CoffeeState {
     }
 
     @Override
-    public synchronized void refillIngredients(java.util.HashMap<String, Integer> ingredients) {
+    public synchronized void refillIngredients(Map<String, Integer> ingredients) {
         System.out.println("Dispensing in progress. Cannot refill ingredients at this stage.");
     }
 }

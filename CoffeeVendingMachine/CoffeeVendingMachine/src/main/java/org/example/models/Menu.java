@@ -21,4 +21,15 @@ public class Menu {
         menuMap.remove(coffeeName);
     }
 
+    public String showMenu(){
+        StringBuilder menuString = new StringBuilder("Menu:\n");
+        for (Coffee coffee : menuMap.values()) {
+            menuString.append(coffee.getName())
+                    .append(" - $")
+                    .append(coffee.getPrice())
+                    .append("\n");
+        }
+        return menuString.toString();
+    }
+
 }
