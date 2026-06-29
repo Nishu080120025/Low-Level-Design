@@ -2,6 +2,7 @@ package org.example.state;
 
 import org.example.CoffeeMachine;
 import org.example.models.Coffee;
+import org.example.models.PaymentMethod;
 
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class DispenseState implements CoffeeState {
     }
 
     @Override
-    public synchronized void insertPayment(double amount) {
+    public synchronized void insertPayment(double amount, PaymentMethod method) {
         System.out.println("Dispensing in progress. Please wait until the current coffee is dispensed.");
     }
 

@@ -1,6 +1,7 @@
 package org.example.state;
 
 import org.example.CoffeeMachine;
+import org.example.models.PaymentMethod;
 
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class OutOfStockState implements CoffeeState{
     }
 
     @Override
-    public synchronized void insertPayment(double amount) {
+    public synchronized void insertPayment(double amount, PaymentMethod method) {
         System.out.println("Cannot insert payment. The machine is out of stock.");
     }
     @Override

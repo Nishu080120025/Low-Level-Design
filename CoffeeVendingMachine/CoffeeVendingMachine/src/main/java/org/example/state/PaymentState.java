@@ -20,12 +20,12 @@ public class PaymentState implements CoffeeState{
     }
 
     @Override
-    public synchronized void insertPayment(double amount){
+    public synchronized void insertPayment(double amount,PaymentMethod method){
         double price=coffeeMachine.getSelectedCoffee().getPrice();
         Payment payment=new Payment(amount, PaymentMethod.UPI);
         if(payment.getAmount()>=price){
             double change=payment.getAmount()-price;
-            coffeeMachine.getPaymentProcessorFactory().getPaymentProcessor(payment.getPaymentMethod()).pay(payment);
+            coffeeMachine.getPaymentProcessorFactory().getPaymentProcessor(method).pay(payment);
             System.out.println("Change returned: " + change);
             coffeeMachine.setCurrentState(coffeeMachine.getDispenseState());
         }

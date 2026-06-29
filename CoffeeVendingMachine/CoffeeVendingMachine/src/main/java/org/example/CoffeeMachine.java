@@ -5,6 +5,7 @@ import org.example.factory.PaymentProcessorFactory;
 import org.example.models.Coffee;
 import org.example.models.Inventory;
 import org.example.models.Menu;
+import org.example.models.PaymentMethod;
 import org.example.state.*;
 
 import java.util.HashMap;
@@ -67,8 +68,8 @@ public class CoffeeMachine {
         this.currentState.selectCoffee(coffeeName);
     }
 
-    public synchronized void insertPayment(double amount) {
-        this.currentState.insertPayment(amount);
+    public synchronized void insertPayment(double amount, PaymentMethod method) {
+        this.currentState.insertPayment(amount,method);
     }
 
     public synchronized void dispenseCoffee() {

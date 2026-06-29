@@ -2,6 +2,7 @@ package org.example.state;
 
 import org.example.CoffeeMachine;
 import org.example.models.Coffee;
+import org.example.models.PaymentMethod;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class IdleState implements CoffeeState {
     }
 
     @Override
-    public synchronized void insertPayment(double amount){
+    public synchronized void insertPayment(double amount, PaymentMethod method){
 
         System.out.println("Please select a coffee first before inserting payment.");
     }
