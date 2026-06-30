@@ -1,6 +1,4 @@
 package org.example.appenders;
-
-import lombok.extern.java.Log;
 import org.example.formatters.LogFormatters;
 import org.example.model.LogMessage;
 

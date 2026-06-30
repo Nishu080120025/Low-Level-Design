@@ -1,9 +1,6 @@
 package org.example.state;
 
-import org.example.models.Coffee;
 import org.example.models.PaymentMethod;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public interface CoffeeState {

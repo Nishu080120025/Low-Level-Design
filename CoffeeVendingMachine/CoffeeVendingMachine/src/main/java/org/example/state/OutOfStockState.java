@@ -6,7 +6,7 @@ import org.example.models.PaymentMethod;
 import java.util.Map;
 
 public class OutOfStockState implements CoffeeState{
-    private CoffeeMachine coffeeMachine;
+    private final CoffeeMachine coffeeMachine;
 
     public OutOfStockState(CoffeeMachine coffeeMachine) {
         this.coffeeMachine = coffeeMachine;
