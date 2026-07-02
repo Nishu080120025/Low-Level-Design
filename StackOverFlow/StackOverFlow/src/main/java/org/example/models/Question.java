@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 public class Question extends Post implements Voteable, Commentable {
 
     private String id;
@@ -75,33 +75,4 @@ public class Question extends Post implements Voteable, Commentable {
         return this.answerList;
     }
 
-
-
-
-//    private Set<Tags> tagSet;
-//    private List<Answer> answerList;
-//    private String title;
-//    private String content;
-//    private User author;
-//    @Setter
-//    private Answer acceptedAnswer;
-//    public Question(User author,String content,String title,Set<Tags>tagSet){
-//        super(author,content);
-//        this.title=title;
-//        this.tagSet=tagSet;
-//        this.answerList=new CopyOnWriteArrayList<>();
-//        this.acceptedAnswer=null;
-//    }
-//
-//    public void addAnswer(Answer answer){
-//        this.answerList.add(answer);
-//    }
-//    public synchronized void acceptAnswer(Answer answer){
-//        if(!this.answerList.contains(answer)){
-//            throw new IllegalArgumentException("Answer does not belong to this question");
-//        }
-//        answer.acceptAnswer();
-//        setAcceptedAnswer(answer);
-//        notify(new VoteEvent(this, answer.getAuthor(), EventType.ANSWER_ACCEPTED));
-//    }
 }

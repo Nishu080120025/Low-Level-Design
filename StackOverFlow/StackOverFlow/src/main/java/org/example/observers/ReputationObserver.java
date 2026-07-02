@@ -6,7 +6,7 @@ import org.example.models.events.AcceptEvent;
 import org.example.models.events.VoteEvent;
 
 public class ReputationObserver implements PostObserver {
-    private static final int QUESTION_UPVOTE_REPUTATION_CHANGE=10;
+    private static final int QUESTION_UPVOTE_REPUTATION_CHANGE=2;
     private static final int QUESTION_DOWNVOTE_REPUTATION_CHANGE=-2;
     private static final int ANSWER_UPVOTE_REPUTATION_CHANGE=5;
     private static final int ANSWER_DOWNVOTE_REPUTATION_CHANGE=-2;

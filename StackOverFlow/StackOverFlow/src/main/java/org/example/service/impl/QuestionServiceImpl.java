@@ -58,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
         return true;
     }
 
-    private void addObserver(PostObserver observer) {
+    public  void addObserver(PostObserver observer) {
         this.observers.add(observer);
     }
 
@@ -75,7 +75,7 @@ public class QuestionServiceImpl implements QuestionService {
     public boolean acceptAnswer(Question question ,User author,Answer answer){
         if(question==null || answer==null || author==null)throw new IllegalArgumentException("Question, answer and author cannot be null");
 
-        if(questionMap.get(question.getId()).getAuthor().getId()!=author.getId()){
+        if(questionMap.get(question.getId()).getAuthor().getId().equals(author.getId())){
             throw new IllegalArgumentException("Only the author of the question can accept an answer");
         }
 
@@ -142,5 +142,11 @@ public class QuestionServiceImpl implements QuestionService {
         return false;
     }
 
+    public Tags createTag(String name){
+        if(name==null || name.isEmpty()){
+            throw new IllegalArgumentException("Tag name cannot be null or empty");
+        }
+        return new Tags(name);
+    }
 
 }

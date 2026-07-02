@@ -10,11 +10,9 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
 public class Answer extends Post implements Voteable, Commentable {
     private volatile Boolean isAccepted;
-    private User author;
-    private String content;
     private List<Comment>commentList;
     private List<Vote> votes;
     private String questionId;
@@ -25,12 +23,9 @@ public class Answer extends Post implements Voteable, Commentable {
         this.isAccepted=false;
         this.commentList=new CopyOnWriteArrayList<>();
         this.votes=new CopyOnWriteArrayList<>();
+        this.questionId=questionId;
     }
 
-    @Override
-    public String getId(){
-        return this.id;
-    }
 
     @Override
     public void addVote(Vote vote){
@@ -50,11 +45,6 @@ public class Answer extends Post implements Voteable, Commentable {
     @Override
     public List<Vote> getVotes() {
         return this.votes;
-    }
-
-    @Override
-    public User getAuthor() {
-        return this.author;
     }
 
     @Override
